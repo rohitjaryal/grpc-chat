@@ -15,9 +15,10 @@ const join = (call, callback) => {
   const user = call.request;
 
   // check username already exists.
-  const userExiist = usersInChat.find((_user) => _user.name == user.name);
+  const userExiist = usersInChat.find((_user) => _user.name === user.name);
   if (!userExiist) {
     usersInChat.push(user);
+    console.log('user joined:',user)
     callback(null, {
       error: 0,
       msg: "Success",
@@ -28,6 +29,8 @@ const join = (call, callback) => {
 };
 
 const sendMsg = (call, callback) => {
+  console.log('message sent',call.request)
+
   const chatObj = call.request;
   observers.forEach((observer) => {
     observer.call.write(chatObj);
@@ -42,6 +45,8 @@ const getAllUsers = (call, callback) => {
 };
 
 const receiveMsg = (call, callback) => {
+  console.log('message received',call.request)
+
   observers.push({
     call,
   });
